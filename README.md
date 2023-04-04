@@ -12,6 +12,7 @@
 ### 移除 `laravel/sanctum` 依赖包
 
 - `composer remove laravel/sanctum`
+- 移除 `config/sanctum.php` 文件
 
 ### 移除默认的 `App\Models\User` 模型文件及相关迁移
 
