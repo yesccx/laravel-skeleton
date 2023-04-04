@@ -1,64 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel-Skeleton
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Laravel9.3.1
 
-## About Laravel
+以下为基于官方版本做的变更调整
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 新增 helpers.php
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 新增 `app/Support/helpers.php` 文件
+- 调整 `composer.json` 文件，加载 `helpers.php` 文件
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 移除 `laravel/sanctum` 依赖包
 
-## Learning Laravel
+- `composer remove laravel/sanctum`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 移除默认的 `App\Models\User` 模型文件及相关迁移
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 移除 `app/Models/User.php` 文件
+- 移除 `database/factories/UserFactory.php` 文件
+- 移除 `database/migrations/2014_10_12_000000_create_users_table.php` 文件
+- 移除 `database/migrations/2014_10_12_100000_create_password_resets_table.php` 文件
+- 移除 `database/migrations/2019_08_19_000000_create_failed_jobs_table.php` 文件
+- 移除 `database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php` 文件
+- 移除 `database/seeders/DatabaseSeeder.php` 文件
+- 调整 `routes/api.php` 文件，移除 `User` 模型相关内容
+- 调整 `routes/channels.php` 件，移除 `User` 模型相关内容
+- 调整 `app/Providers/EventServiceProvider.php` 文件，移除注册事件监听
+- 调整 `app/Http/Middleware/TrimStrings` 文件，去除 `except` 中用户密码相关配置
+- 调整 `app/Exceptions/Handler` 文件，去除 `dontFlash` 中用户密码相关配置
 
-## Laravel Sponsors
+### 移除多余中间件
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- 调整 `app/Http/Kernel` 文件，禁用 `HandleCors` 中间件
+- 调整 `app/Http/Kernel` 文件，禁用 `TrustProxies` 中间件
+- 调整 `app/Http/Kernel` 文件，移除 `middlewareGroups.api` 中的 `throttle:api` 中间件
+- 调整 `app/Http/Kernel` 文件，移除 `middlewareGroups.api` 中的 `SubstituteBindings` 中间件
+- 调整 `app/Http/Kernel` 文件，移除 `middlewareGroups.api` 中的 `EnsureFrontendRequestsAreStateful` 中间件
 
-### Premium Partners
+### 移除默认控制器
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- 移除 `app/Http/Controllers/Controller.php` 文件
 
-## Contributing
+### 移除默认api限流器
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 调整 `app/Providers/RouteServiceProvider.php` 文件， 移除 `configureRateLimiting` 方法
 
-## Code of Conduct
+### 移除默认定义的web路由
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- 调整 `app/routes/web.php` 文件，移除 `web` 路由
 
-## Security Vulnerabilities
+### 调整时区及语言
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- 调整 `config/app.php`文件，配置 `app.timezone` 为 `PRC`
+- 调整 `config/app.php`文件，配置 `app.locale` 为 `zh_CN`
+- 调整 `config/app.php`文件，配置 `app.faker_locale` 为 `zh_CN`
 
-## License
+### 调整事件自动发现默认开启
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 调整 `app/Providers/EventServiceProvider.php`文件，配置 `shouldDiscoverEvents` 方法返回 `true`
+
+### 调整默认日志配置
+
+- 调整 `app/config/logging.php`文件，配置 `channels.stack.channels` 为 `daily`
+- 调整 `app/config/logging.php`文件，配置 `channels.daily.days` 为 `30`
